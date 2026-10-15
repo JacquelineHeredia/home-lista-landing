@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home Lista · Alacena</title>
+<meta name="description" content="Home Lista: productos para el hogar. Sección Alacena con frascos de vidrio, tapas de bambú y contenedores de acrílico. Arma tu pedido y envíalo por WhatsApp.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 38'%3E%3Crect x='8' y='1' width='18' height='5' rx='2' fill='%23D9EC5B'/%3E%3Cpath d='M9 9h16l6 7v16a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V16z' fill='none' stroke='%2317231B' stroke-width='3.2' stroke-linejoin='round'/%3E%3Cpath d='M11 23.5l4.5 4.5L24 19' fill='none' stroke='%238FA81E' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --ink:#17231B; --ground:#F1F3EE; --muted:#4E5B52; --line:#D5DBD1; --tile:#E8ECE4;
+  --accent:#D9EC5B; --olive:#8FA81E; --bamboo:#C9A26B; --dark2:#22322A; --soft:#C9D2C6;
+  --display:'Bricolage Grotesque',system-ui,sans-serif; --body:'Figtree',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  --pad:clamp(16px,4vw,56px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--ink)}
+button{font-family:inherit;cursor:pointer}
+img{display:block}
+.wrap{max-width:1440px;margin:0 auto;width:100%;padding-left:var(--pad);padding-right:var(--pad)}
+.mono{font-family:var(--mono);letter-spacing:.08em}
+h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-.02em;margin:0;line-height:1}
+h2{font-size:clamp(32px,4vw,52px)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Encabezado */
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px var(--pad);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand b{font-family:var(--display);font-weight:800;font-size:18px;display:block}
+.brand small{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.navrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.tabs{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:4px;border:2px solid var(--ink);border-radius:999px;background:#fff;max-width:100%;overflow-x:auto}
+.tabs a{position:relative;z-index:1;text-decoration:none;text-align:center;white-space:nowrap;padding:11px 18px;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink);transition:color .2s}
+.tabs a.on{color:var(--ground)}
+.cursor{position:absolute;top:4px;bottom:4px;left:4px;width:0;border-radius:999px;background:var(--ink);transition:left .38s cubic-bezier(.3,1.35,.5,1),width .38s cubic-bezier(.3,1.35,.5,1);pointer-events:none}
+.pill-dark{text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;background:var(--ink);color:var(--ground);font-weight:600;font-size:15px}
+
+/* Portada */
+.hero{display:flex;flex-wrap:wrap;gap:48px;align-items:center;padding-top:clamp(40px,6vw,88px);padding-bottom:56px}
+.hero-copy{flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:24px}
+.tag{align-self:flex-start;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;background:var(--accent);padding:7px 12px;border-radius:6px}
+.hero h1{font-size:clamp(44px,6.4vw,88px);line-height:.95;letter-spacing:-.03em}
+.hero p{margin:0;font-size:19px;line-height:1.55;color:#3E4A42;max-width:520px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{text-decoration:none;display:inline-flex;align-items:center;gap:10px;padding:16px 24px;border-radius:14px;font-weight:700;font-size:16px}
+.btn-dark{background:var(--ink);color:var(--ground)}
+.btn-line{border:1.5px solid var(--ink);color:var(--ink)}
+.trust{display:flex;flex-wrap:wrap;gap:10px 28px;padding-top:8px;font-size:14px;color:var(--muted)}
+.trust span{display:inline-flex;align-items:center;gap:8px}
+.shelf{flex:1 1 520px;min-width:0;background:#fff;border-radius:28px;padding:28px 28px 20px;display:flex;flex-direction:column;gap:22px;box-shadow:0 30px 60px -40px rgba(23,35,27,.45)}
+.row{display:flex;align-items:flex-end;justify-content:space-around;gap:10px;border-bottom:10px solid var(--bamboo);padding:0 8px}
+.row img{max-width:30%;object-fit:contain}
+.shelf-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);gap:8px}
+
+.ticker{background:var(--ink);color:var(--ground);padding:16px var(--pad);display:flex;flex-wrap:wrap;justify-content:center;gap:8px 32px;font-family:var(--mono);font-size:13px;letter-spacing:.06em}
+.ticker i{color:var(--accent);font-style:normal}
+
+/* Secciones */
+.sections{padding-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.sec{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px;min-height:160px;text-decoration:none;border:1.5px dashed #AEB8AA}
+.sec.live{background:var(--ink);color:var(--ground);border:0}
+.sec-top{display:flex;justify-content:space-between;align-items:center}
+.badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 8px;border-radius:6px;background:#E3E8E0;color:var(--ink)}
+.live .badge{background:var(--accent)}
+.sec b{font-family:var(--display);font-weight:800;font-size:30px;line-height:1}
+.sec span.d{font-size:14px;color:var(--muted)}
+.live span.d{color:var(--soft)}
+
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.head p{margin:0;color:var(--muted);font-size:16px;max-width:420px}
+
+/* Zonas */
+#zonas{padding-top:72px;padding-bottom:24px;display:flex;flex-direction:column;gap:28px}
+.zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.zone{text-decoration:none;background:#fff;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;min-height:210px;border:1.5px solid #fff;cursor:pointer;text-align:left;font:inherit;color:var(--ink)}
+.zone.on{background:var(--accent);border-color:var(--ink)}
+.zone small{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.zone img{height:110px;width:100%;object-fit:contain}
+.zone b{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.1}
+
+/* Catálogo */
+#catalogo{padding-top:48px;padding-bottom:72px;display:flex;flex-direction:column;gap:24px}
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #CBD3C7;border-radius:14px;padding:0 14px;min-height:50px;flex:0 1 380px}
+.search input{border:0;outline:none;background:transparent;font:inherit;font-size:15px;color:var(--ink);flex:1;min-width:0;min-height:46px}
+.search:focus-within{border-color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.chip span{opacity:.7;font-family:var(--mono);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(256px,1fr));gap:16px}
+.card{background:#fff;border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.photo{position:relative;aspect-ratio:1/1;background:var(--tile);border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo img{max-width:84%;max-height:84%;object-fit:contain}
+.pag{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;background:#fff;padding:5px 8px;border-radius:6px}
+.pack{position:absolute;bottom:10px;left:10px;right:10px;display:flex;justify-content:space-between;gap:8px;white-space:nowrap;font-size:11.5px;font-weight:600;background:var(--ink);color:var(--ground);padding:7px 10px;border-radius:10px}
+.pack em{font-style:normal;color:var(--accent)}
+.card h3{margin:0;font-size:16px;font-weight:700;line-height:1.25}
+.card .det{font-size:13px;color:var(--muted);line-height:1.4}
+.txt{display:flex;flex-direction:column;gap:4px;padding:0 4px}
+.vars{display:flex;flex-wrap:wrap;gap:6px;padding:0 4px}
+.var{min-height:34px;padding:0 10px;border-radius:8px;border:1.5px solid #CBD3C7;background:#fff;color:var(--ink);font-family:var(--mono);font-size:11px;font-weight:700}
+.var[aria-pressed="true"]{background:var(--accent);border-color:var(--ink)}
+.buy{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 4px 2px}
+.price{font-family:var(--display);font-weight:800;font-size:24px;white-space:nowrap}
+.add{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:var(--accent);color:var(--ink);font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.step{display:inline-flex;align-items:center;background:var(--ink);border-radius:12px;color:var(--ground)}
+.step button{width:44px;height:44px;border:0;background:transparent;color:var(--ground);font-size:20px;font-weight:700}
+.step button.plus{color:var(--accent)}
+.step span{min-width:24px;text-align:center;font-weight:700}
+.empty{margin:0;padding:40px;text-align:center;background:#fff;border-radius:20px;color:var(--muted)}
+.more{align-self:center;min-height:52px;padding:0 28px;border-radius:14px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-weight:700;font-size:15px}
+
+/* Pedido */
+#pedido{background:var(--ink);color:var(--ground);padding:72px var(--pad)}
+.order{max-width:1328px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px}
+.order-list{flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.order-side{flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--accent)}
+.noitems{margin:0;padding:28px;border:1.5px dashed #4E6255;border-radius:18px;color:var(--soft);font-size:16px;line-height:1.5}
+.lines{display:flex;flex-direction:column;gap:10px}
+.line{display:flex;align-items:center;gap:14px;background:var(--dark2);border-radius:16px;padding:10px 12px;flex-wrap:wrap}
+.thumb{width:56px;height:56px;border-radius:12px;background:var(--tile);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.thumb img{max-width:46px;max-height:46px;object-fit:contain}
+.line-info{flex:1 1 200px;min-width:0;display:flex;flex-direction:column;gap:2px}
+.line-info b{font-size:15px}
+.line-info span{font-size:13px;color:var(--soft)}
+.line-info em{font-style:normal;font-size:12px;color:var(--accent);font-weight:600}
+.line .step{background:transparent;border:1px solid #4E6255}
+.line .step button.plus{color:var(--ground)}
+.line-total{min-width:96px;text-align:right;font-family:var(--display);font-weight:700;font-size:18px}
+.ticket{background:#FBFCF8;color:var(--ink);border-radius:6px 6px 18px 18px;padding:24px 22px;display:flex;flex-direction:column;gap:14px;border-top:6px dashed var(--ink)}
+.ticket small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted)}
+.ticket pre{margin:0;white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;line-height:1.6}
+.ticket-total{border-top:1.5px dashed #CBD3C7;padding-top:12px;display:flex;justify-content:space-between;align-items:baseline}
+.ticket-total b{font-family:var(--display);font-weight:800;font-size:28px}
+.send{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;min-height:58px;border-radius:16px;background:var(--accent);color:var(--ink);font-weight:800;font-size:17px}
+.note{margin:0;font-size:13px;color:var(--soft);line-height:1.5}
+
+/* Cómo comprar */
+#como-comprar{padding-top:80px;padding-bottom:80px;display:flex;flex-direction:column;gap:32px}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.steps li{background:#fff;border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:12px}
+.steps .n{font-family:var(--mono);font-weight:700;font-size:13px;background:var(--accent);align-self:flex-start;padding:6px 10px;border-radius:6px}
+.steps h3{margin:0;font-size:20px;font-weight:700}
+.steps p{margin:0;color:var(--muted);line-height:1.5}
+
+footer{border-top:1px solid var(--line);padding:32px var(--pad) 112px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:14px;color:var(--muted)}
+footer a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600}
+
+.bar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:calc(100% - 32px);max-width:720px;z-index:20;background:var(--ink);color:var(--ground);border-radius:18px;padding:10px 10px 10px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 18px 40px -16px rgba(23,35,27,.6)}
+.bar[hidden]{display:none}
+.bar a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 18px;border-radius:12px;background:var(--accent);color:var(--ink);font-weight:700}
+
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--olive);outline-offset:2px}
+@media (max-width:640px){
+  .tabs a{padding:10px 12px;font-size:13px}
+  .hero p{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cursor{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#inicio">
+    <svg width="34" height="38" viewBox="0 0 34 38" aria-hidden="true"><rect x="8" y="1" width="18" height="5" rx="2" fill="#D9EC5B"/><path d="M9 9h16l6 7v16a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V16z" fill="none" stroke="#17231B" stroke-width="3.2" stroke-linejoin="round"/><path d="M11 23.5l4.5 4.5L24 19" fill="none" stroke="#8FA81E" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span><b>Home Lista</b><small>PRODUCTOS PARA EL HOGAR</small></span>
+  </a>
+  <div class="navrow">
+    <nav class="tabs" id="tabs" aria-label="Principal">
+      <span class="cursor" id="cursor" aria-hidden="true"></span>
+      <a href="#secciones">Secciones</a>
+      <a href="#zonas">Alacena</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#como-comprar">Cómo comprar</a>
+    </nav>
+    <a class="pill-dark" href="#pedido">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7h-7a2 2 0 0 1-2-1.7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+      Mi pedido · <span id="unitsTop">0 productos</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap" id="inicio">
+    <div class="hero-copy">
+      <span class="tag">SECCIÓN ALACENA · 111 PRODUCTOS</span>
+      <h1>Tu casa, lista. Empieza por la alacena.</h1>
+      <p>Frascos de vidrio borosilicato, tapas de bambú y contenedores de acrílico apilables. Arma tu pedido aquí y lo enviamos listo a WhatsApp, con número de página y cantidades.</p>
+      <div class="ctas">
+        <a class="btn btn-dark" href="#catalogo">Ver el catálogo
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg>
+        </a>
+        <a class="btn btn-line wa-hello" href="#" target="_blank" rel="noopener">
+          <img src="img/whatsapp.png" alt="" width="28" height="28"> 936 124 590
+        </a>
+      </div>
+      <div class="trust">
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>Transferencia · Yape · Plin</span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Delivery o agencia de tu preferencia</span>
+      </div>
+    </div>
+    <div class="shelf" role="img" aria-label="Repisa con frascos de vidrio, dispensadores y condimenteros del catálogo">
+      <div class="row" style="height:190px">
+        <img src="img/p19.webp" alt="" style="height:176px">
+        <img src="img/p33.webp" alt="" style="height:140px">
+        <img src="img/p39.webp" alt="" style="height:170px">
+      </div>
+      <div class="row" style="height:170px">
+        <img src="img/p89.webp" alt="" style="height:150px">
+        <img src="img/p23.webp" alt="" style="height:118px;max-width:34%">
+        <img src="img/p56.webp" alt="" style="height:160px">
+      </div>
+      <div class="row" style="height:170px">
+        <img src="img/p102.webp" alt="" style="height:156px">
+        <img src="img/p20.webp" alt="" style="height:160px">
+        <img src="img/p100.webp" alt="" style="height:128px;max-width:34%">
+      </div>
+      <div class="shelf-labels"><span>VIDRIO BOROSILICATO</span><span>BAMBÚ</span><span>ACRÍLICO APILABLE</span></div>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <span>PRECIO ESPECIAL POR PACK</span><i aria-hidden="true">●</i>
+    <span>PEDIDO ARMADO EN UN SOLO MENSAJE</span><i aria-hidden="true">●</i>
+    <span>DELIVERY O AGENCIA</span>
+  </div>
+
+  <section class="sections wrap" id="secciones" aria-label="Secciones de Home Lista">
+    <a class="sec live" href="#zonas">
+      <span class="sec-top">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9EC5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v3H8z"/><path d="M7 6h10v13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z"/><path d="M7 11h10"/></svg>
+        <span class="badge">DISPONIBLE</span>
+      </span>
+      <b>Alacena</b>
+      <span class="d">111 productos · despensa, refri, mesa y más</span>
+    </a>
+    <div class="sec">
+      <span class="sec-top">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4E5B52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7a2 2 0 1 1 2-2"/><path d="M12 7v2l9 7H3l9-7"/></svg>
+        <span class="badge">MUY PRONTO</span>
+      </span>
+      <b>Clóset</b><span class="d">Orden para ropa y accesorios</span>
+    </div>
+    <div class="sec">
+      <span class="sec-top">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4E5B52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg>
+        <span class="badge">MUY PRONTO</span>
+      </span>
+      <b>Baño</b><span class="d">Orden para el tocador y la ducha</span>
+    </div>
+    <div class="sec">
+      <span class="sec-top">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4E5B52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6.5h.01"/></svg>
+        <span class="badge">MUY PRONTO</span>
+      </span>
+      <b>Lavandería</b><span class="d">Todo en su lugar para lavar</span>
+    </div>
+  </section>
+
+  <section class="wrap" id="zonas">
+    <div class="head">
+      <h2>Alacena: compra por zona</h2>
+      <p>Elige el rincón que quieres ordenar y te mostramos solo lo que sirve ahí.</p>
+    </div>
+    <div class="zones" id="zonesBox"></div>
+  </section>
+
+  <section class="wrap" id="catalogo">
+    <div class="head">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="mono" id="resultTxt" style="font-size:12px;color:var(--muted)"></span>
+        <h2 id="catTitle">Toda la alacena</h2>
+      </div>
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4E5B52" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span class="sr-only">Buscar producto</span>
+        <input type="search" id="q" placeholder="Busca: frasco, huevos, 1600 ml, pág. 42…" autocomplete="off">
+      </label>
+    </div>
+    <div class="chips" id="chipsBox" role="group" aria-label="Filtrar por zona"></div>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>No encontramos productos con esa búsqueda. Prueba con otra palabra o elige «Todo».</p>
+    <button type="button" class="more" id="more" hidden></button>
+  </section>
+
+  <section id="pedido">
+    <div class="order">
+      <div class="order-list">
+        <span class="kicker">TU PEDIDO SE ARMA SOLO</span>
+        <h2>Revisa y envía en un toque</h2>
+        <p class="noitems" id="noitems">Aún no agregas productos. Toca «Agregar» en el catálogo y aquí verás tu lista con página, medida y cantidad, lista para enviar.</p>
+        <div class="lines" id="lines"></div>
+      </div>
+      <div class="order-side">
+        <div class="ticket">
+          <small>VISTA PREVIA DEL MENSAJE</small>
+          <pre id="msg"></pre>
+          <div class="ticket-total"><span style="font-weight:600">Total referencial</span><b id="total">S/ 0.00</b></div>
+        </div>
+        <a class="send" id="send" href="#" target="_blank" rel="noopener">
+          <img src="img/whatsapp.png" alt="" width="30" height="30"> Enviar pedido por WhatsApp
+        </a>
+        <p class="note">Los precios son referenciales. Te respondemos con la cotización final y coordinamos pago y envío.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="como-comprar">
+    <h2>Comprar es así de simple</h2>
+    <ol class="steps">
+      <li><span class="n">01</span><h3>Arma tu pedido</h3><p>Agrega productos y cantidades. La página y la medida se anotan solas en tu mensaje.</p></li>
+      <li><span class="n">02</span><h3>Recibe tu cotización</h3><p>Te respondemos por WhatsApp. Revisa la cotización y da tu conformidad.</p></li>
+      <li><span class="n">03</span><h3>Paga como prefieras</h3><p>Transferencia, Yape o Plin. Envía la foto de la constancia al mismo chat.</p></li>
+      <li><span class="n">04</span><h3>Recíbelo en casa</h3><p>Coordinamos la entrega por delivery o por la agencia de tu preferencia.</p></li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <span><strong style="color:var(--ink)">Home Lista</strong> · Productos para el hogar</span>
+  <a class="wa-hello" href="#" target="_blank" rel="noopener"><img src="img/whatsapp.png" alt="" width="28" height="28">WhatsApp 936 124 590</a>
+</footer>
+
+<div class="bar" id="bar" hidden>
+  <span><strong id="barUnits"></strong> · <span id="barTotal"></span></span>
+  <a href="#pedido">Revisar y enviar</a>
+</div>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN — cambia aquí número, zonas y productos
+   ========================================================= */
+var WHATSAPP = '51936124590';
+
+var CATS = [
+  { id: 'todo',     name: 'Todo',                 title: 'Toda la alacena' },
+  { id: 'despensa', name: 'Despensa',             title: 'Despensa a la vista',  img: 'img/p42.webp' },
+  { id: 'refri',    name: 'Refri y frescos',      title: 'Refri y frescos',      img: 'img/p57.webp' },
+  { id: 'bebidas',  name: 'Bebidas e infusiones', title: 'Bebidas e infusiones', img: 'img/p34.webp' },
+  { id: 'mesa',     name: 'Mesa y servir',        title: 'Mesa y servir',        img: 'img/p47.webp' },
+  { id: 'especias', name: 'Especias y aceites',   title: 'Especias y aceites',   img: 'img/p89.webp' },
+  { id: 'orden',    name: 'Cajones y orden',      title: 'Cajones y orden',      img: 'img/p52.webp' }
+];
+
+/* [página, nombre, detalle, [[medida, precio], ...], cantidad pack, precio pack, zona]
+   La foto de cada producto es img/p<página>.webp */
+var PRODUCTOS = [
+  [1,'Contenedor de alimentos','Acrílico · 1500 ml · azul, verde o blanco',[['',16.5]],0,0,'despensa'],
+  [2,'Contenedor de alimentos','Acrílico · 1800 ml',[['',20.5]],0,0,'despensa'],
+  [3,'Contenedor de alimentos','Acrílico · 1800 ml · 15.7×29.5×8.5 cm',[['',20.5]],0,0,'despensa'],
+  [4,'Contenedor de alimentos','Acrílico · 2500 ml · azul, verde o blanco',[['',23.5]],0,0,'despensa'],
+  [5,'Contenedor de alimentos','Plástico · 1000 ml',[['',8]],0,0,'despensa'],
+  [6,'Organizador de utensilios','Acrílico',[['',17.5]],0,0,'orden'],
+  [7,'Organizador de utensilios','Metal · 32×26×4.5 cm',[['',17.5]],0,0,'orden'],
+  [8,'Vaso de vidrio','Tapa de bambú · 500 ml · modelos A y B',[['',12.5]],0,0,'bebidas'],
+  [9,'Vaso de vidrio','Tapa de bambú · 500 ml',[['',13.5]],0,0,'bebidas'],
+  [10,'Vaso de vidrio','Tapa de bambú',[['',15.5]],0,0,'bebidas'],
+  [11,'Vaso de vidrio','Tapa de bambú · 19×8.6 cm',[['',13]],0,0,'bebidas'],
+  [12,'Contenedor de vidrio','Tapa de bambú cuadrada',[['6.5×12.5',8.5],['8×15',13.5],['13×10',15],['10×16',16]],0,0,'despensa'],
+  [13,'Frasco borosilicato','Tapa de bambú cuadrada · 10×20 cm · 1300 ml',[['',18.5]],0,0,'despensa'],
+  [14,'Frasco borosilicato','Tapa de bambú cuadrada · 8.5×20 cm',[['',16.5]],0,0,'despensa'],
+  [15,'Contenedor de vidrio','Tapa de bambú circular',[['6.5×8.5',8],['6.5×10',9],['6.5×12',11.5],['6.5×15',12.5]],0,0,'despensa'],
+  [16,'Contenedor de vidrio','Tapa de bambú circular',[['6.5×18',13.5],['6.5×20',14.5]],0,0,'despensa'],
+  [17,'Contenedor de vidrio','Tapa de bambú circular',[['10×8.5',10.5],['12×8.5',12.5],['10×15.5',14.5],['15.5×8.5',17.5]],0,0,'despensa'],
+  [18,'Contenedor de vidrio','Tapa de bambú circular · 10×20 cm',[['',18.5]],0,0,'despensa'],
+  [19,'Contenedor de vidrio','Tapa de bambú circular · 10×25 cm · 1450 ml',[['',21.5]],0,0,'despensa'],
+  [20,'Contenedor de vidrio','Tapa de bambú circular · 10×30 cm',[['',23.5]],0,0,'despensa'],
+  [21,'Contenedor de vidrio labrado','Tapa de bambú circular',[['10×15.5',17.5],['10×20',19.5],['10×25',21.5]],0,0,'despensa'],
+  [22,'Set de frasco borosilicato','Tapa de bambú circular · incluye base',[['',38.5]],0,0,'despensa'],
+  [23,'Frasco borosilicato','Tapa de bambú y cuchara',[['8.5×10',11],['10×10',13]],0,0,'especias'],
+  [24,'Frasco borosilicato','Tapa de bambú y cuchara',[['8×15',17.5],['8×20',20.5]],0,0,'especias'],
+  [25,'Frasco borosilicato','Tapa de bambú y cuchara · 8×10 cm',[['',13.5]],0,0,'especias'],
+  [26,'Frasco borosilicato','Tapa de bambú y cuchara',[['8×15',17.5],['8×20',20.5]],0,0,'especias'],
+  [27,'Contenedor de acrílico','Tapa de bambú · 20×15×7 cm',[['',15]],0,0,'despensa'],
+  [28,'Molino','Para granos y especias',[['',26]],0,0,'especias'],
+  [29,'Aceitera en spray','100 ml',[['',7]],0,0,'especias'],
+  [30,'Moledor de pimienta','20×5.5 cm',[['',20]],0,0,'especias'],
+  [31,'Contenedor de vidrio para miel','Tapa de bambú · 9.5×14.5 cm',[['',22]],0,0,'mesa'],
+  [32,'Contenedor de vidrio para miel','Tapa de bambú · 7.5×12.5 cm',[['',19.5]],0,0,'mesa'],
+  [33,'Contenedor de acrílico para miel','10×14×8 cm',[['',15]],0,0,'mesa'],
+  [34,'Jarra con tapa de bambú','23×8.5 cm',[['',21.5]],0,0,'bebidas'],
+  [35,'Jarra con tapa de bambú','25×8.5 cm',[['',25.5]],0,0,'bebidas'],
+  [36,'Contenedor borosilicato','Tapa de bambú · 600 ml',[['',21]],0,0,'especias'],
+  [37,'Contenedor borosilicato','Tapa de bambú · 800 ml',[['',25]],0,0,'especias'],
+  [38,'Contenedor borosilicato','Tapa de bambú · 1000 ml',[['',27.5]],0,0,'especias'],
+  [39,'Jarra de vidrio borosilicato','Tapa de bambú · 1500 ml',[['',27.5]],0,0,'bebidas'],
+  [40,'Jarra de vidrio borosilicato','Tapa y filtrante · 12×15×8 cm',[['',25.5]],0,0,'bebidas'],
+  [41,'Jarra de vidrio borosilicato','Tapa de bambú · 8×14 cm',[['',18.5]],0,0,'bebidas'],
+  [42,'Dispensador de menestras','Base de bambú y vidrio · 45×20 cm',[['',195]],0,0,'despensa'],
+  [43,'Organizador de madera para infusiones','18×18×12 cm',[['',30]],0,0,'bebidas'],
+  [44,'Organizador de madera para infusiones','23×8.8×7 cm',[['',25]],0,0,'bebidas'],
+  [45,'Organizador de madera para infusiones','24×17 cm',[['',33]],0,0,'bebidas'],
+  [46,'Set tabla de quesos circular','28×38 cm',[['',20]],0,0,'mesa'],
+  [47,'Set tabla de quesos','29×33 cm',[['',22.5]],0,0,'mesa'],
+  [48,'Set tabla de quesos','29×33 cm',[['',20]],0,0,'mesa'],
+  [49,'Tabla de aperitivos','24.5 cm',[['',18]],0,0,'mesa'],
+  [50,'Bandeja de bambú','25.5×38 cm',[['',18]],0,0,'mesa'],
+  [51,'Bandeja de bambú · juego de 3','15×15, 19.5×19.5 y 26×26 cm',[['',16]],0,0,'mesa'],
+  [52,'Organizador de utensilios expandible','Bambú · 41.5×5×37 cm',[['',33.5]],0,0,'orden'],
+  [53,'Organizador de utensilios','Bambú · 30×4.5×34 cm',[['',20]],0,0,'orden'],
+  [54,'Mantequillera','Bambú · 15×12.5 cm',[['',18]],0,0,'mesa'],
+  [55,'Mantequillera de porcelana','Porcelana',[['',28]],0,0,'mesa'],
+  [56,'Conservador de hierbas','Mantiene frescas hierbas y espárragos',[['',15]],3,42,'refri'],
+  [57,'Contenedor con escurridor','Acrílico · 34×9×11 cm',[['',16.5]],3,45,'refri'],
+  [58,'Contenedor con escurridor','Acrílico · 31.5×15×16 cm',[['',23.5]],2,45,'refri'],
+  [59,'Contenedor con escurridor','Acrílico · 31.5×7.5×16 cm',[['',21.5]],3,62,'refri'],
+  [60,'Contenedor apilable','Acrílico · 26.5×17×13 cm',[['',21.5]],3,62,'despensa'],
+  [61,'Contenedor para almacenamiento','Acrílico · 31×24×14 cm',[['',38]],2,72,'despensa'],
+  [62,'Contenedor con escurridor','Acrílico · 32×15.5×10 cm',[['',18]],3,52,'refri'],
+  [63,'Contenedor con escurridor','Acrílico · 32×14.5×20.5 cm',[['',21.5]],3,62,'refri'],
+  [64,'Contenedor con asa para frutas y verduras','Acrílico',[['',18.5]],2,35,'refri'],
+  [65,'Contenedor multiuso','21×14×6.5 cm',[['',16.5]],2,30,'refri'],
+  [66,'Contenedor de frutas y verduras','24×17×7 cm',[['',16.5]],2,30,'refri'],
+  [67,'Contenedor de frutas y verduras','31.2×22.2×6.8 cm',[['',25]],3,72,'refri'],
+  [68,'Contenedor de frutas y verduras','23×7 cm',[['',21]],3,60,'refri'],
+  [69,'Contenedor de frutas y verduras','31.2×22.2×6.8 cm',[['',25]],3,70,'refri'],
+  [70,'Contenedor de plástico','650 ml',[['',3.5]],6,19,'despensa'],
+  [71,'Contenedor de plástico','350 ml',[['',2.5]],6,13,'despensa'],
+  [72,'Bandeja giratoria','35×8 cm',[['',35]],2,65,'orden'],
+  [73,'Set de 4 piezas','Acrílico',[['',45]],0,0,'refri'],
+  [74,'Set de 5 piezas','Acrílico',[['',48]],0,0,'refri'],
+  [75,'Set de 5 piezas','Acrílico',[['',48]],0,0,'refri'],
+  [76,'Contenedor rectangular','Acrílico · 1600 ml',[['',14]],3,40,'despensa'],
+  [77,'Contenedor rectangular','Acrílico · 1600 ml',[['',14]],3,40,'despensa'],
+  [78,'Contenedor rectangular','Acrílico · 1300 ml',[['',13]],3,36,'despensa'],
+  [79,'Contenedor rectangular','Acrílico · 1600 ml',[['',14]],3,40,'despensa'],
+  [80,'Contenedor rectangular','Acrílico · 950 ml',[['',11.5]],3,32,'despensa'],
+  [81,'Contenedor rectangular','Acrílico · 1600 ml',[['',15]],3,42,'despensa'],
+  [82,'Contenedor rectangular','Acrílico · 600 ml',[['',10]],3,27,'despensa'],
+  [83,'Contenedor rectangular','Acrílico · 600 ml',[['',10]],3,27,'despensa'],
+  [84,'Contenedor rectangular','1200 ml',[['',10]],3,27,'despensa'],
+  [85,'Contenedor rectangular','800 ml',[['',9]],6,50,'despensa'],
+  [86,'Contenedor rectangular','500 ml',[['',9]],6,50,'despensa'],
+  [87,'Contenedor rectangular','11×10×12 cm',[['',10]],3,27,'despensa'],
+  [88,'Contenedor rectangular','11×10×17.5 cm',[['',12]],3,33,'despensa'],
+  [89,'Condimentero giratorio','12 piezas',[['',36]],2,66,'especias'],
+  [90,'Condimentero giratorio 360°','12 piezas',[['',36]],2,66,'especias'],
+  [91,'Condimentero giratorio 360°','6 piezas',[['',25]],2,45,'especias'],
+  [92,'Condimentero giratorio 360°','18 piezas',[['',50]],2,85,'especias'],
+  [93,'Set de condimentero','3 piezas',[['',26]],2,50,'especias'],
+  [94,'Set de condimentero','5 piezas',[['',20]],2,35,'especias'],
+  [95,'Espátula acrílica','Acrílico',[['',2.5]],6,13,'orden'],
+  [96,'Organizador de huevos','Plástico PP · 34×6×9 cm',[['',9.5]],0,0,'refri'],
+  [97,'Organizador de huevos','Capacidad: 12 huevos',[['',15]],3,42,'refri'],
+  [98,'Organizador de huevos','Capacidad: 18 huevos',[['',18]],3,50,'refri'],
+  [99,'Organizador de huevos','Capacidad: 24 huevos',[['',20]],3,55,'refri'],
+  [100,'Organizador de huevos','Capacidad: 30 huevos',[['',28]],2,54,'refri'],
+  [101,'Organizador de huevos','Con tapa',[['',32.5]],2,63,'refri'],
+  [102,'Dispensador de granos','32×27 cm',[['',65]],0,0,'despensa'],
+  [103,'Dispensador de granos + porta huevos','41.5×28 cm · capacidad 10 kg',[['',65]],0,0,'despensa'],
+  [104,'Dispensador de granos','27×26×30.5 cm · capacidad 5 kg',[['',60]],0,0,'despensa'],
+  [105,'Organizador 3 niveles','32×24 cm',[['',22]],0,0,'orden'],
+  [106,'Organizador 2 niveles','16.8×24.8 cm',[['',20]],0,0,'orden'],
+  [107,'Organizador multiusos','Con asas',[['',16]],0,0,'orden'],
+  [108,'Organizador multiusos','Transparente',[['',17]],3,48,'orden'],
+  [109,'Porta latas','Para refri o alacena',[['',12.5]],3,35,'refri'],
+  [110,'Molde de hielo en bolas','11.4×5.8×27.3 cm',[['',22]],2,40,'bebidas'],
+  [111,'Frutero transparente','24.8×16.3×6.3 cm',[['',10]],3,26,'mesa']
+];
+
+/* =========================================================
+   LÓGICA — no necesitas tocar lo de abajo
+   ========================================================= */
+(function () {
+  var ALL = PRODUCTOS.map(function (r) {
+    return { pag: r[0], name: r[1], det: r[2], vars: r[3], pq: r[4], pp: r[5], cat: r[6], img: 'img/p' + r[0] + '.webp' };
+  });
+  var BYPAG = {};
+  ALL.forEach(function (p) { BYPAG[p.pag] = p; });
+  var COUNTS = {};
+  ALL.forEach(function (p) { COUNTS[p.cat] = (COUNTS[p.cat] || 0) + 1; });
+
+  var state = { cat: 'todo', q: '', sel: {}, cart: {}, limit: 24 };
+  try { var saved = JSON.parse(localStorage.getItem('homelista-cart') || '{}'); if (saved && typeof saved === 'object') state.cart = saved; } catch (e) {}
+
+  var $ = function (id) { return document.getElementById(id); };
+  function money(n) { return 'S/ ' + n.toFixed(2); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function lineTotal(p, qty, unit) {
+    if (p.pq && qty >= p.pq) return Math.floor(qty / p.pq) * p.pp + (qty % p.pq) * unit;
+    return qty * unit;
+  }
+  function wa(text) { return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(text); }
+  function saveCart() { try { localStorage.setItem('homelista-cart', JSON.stringify(state.cart)); } catch (e) {} }
+
+  document.querySelectorAll('.wa-hello').forEach(function (a) {
+    a.href = wa('Hola Home Lista, vi la sección Alacena y quiero hacer una consulta.');
+  });
+
+  function filtered() {
+    var q = norm(state.q.trim());
+    return ALL.filter(function (p) {
+      if (state.cat !== 'todo' && p.cat !== state.cat) return false;
+      if (!q) return true;
+      var hay = norm(p.name + ' ' + p.det + ' pag. ' + p.pag + ' pag ' + p.pag + ' ' + p.vars.map(function (v) { return v[0]; }).join(' '));
+      return hay.indexOf(q) !== -1;
+    });
+  }
+
+  function renderZones() {
+    $('zonesBox').innerHTML = CATS.slice(1).map(function (c) {
+      return '<button type="button" class="zone' + (c.id === state.cat ? ' on' : '') + '" data-cat="' + c.id + '" data-scroll="1">' +
+        '<small>' + COUNTS[c.id] + ' PRODUCTOS</small>' +
+        '<img src="' + c.img + '" alt="" loading="lazy">' +
+        '<b>' + esc(c.name) + '</b></button>';
+    }).join('');
+  }
+
+  function renderChips() {
+    $('chipsBox').innerHTML = CATS.map(function (c) {
+      var n = c.id === 'todo' ? ALL.length : COUNTS[c.id];
+      return '<button type="button" class="chip" data-cat="' + c.id + '" aria-pressed="' + (c.id === state.cat) + '">' + esc(c.name) + ' <span>' + n + '</span></button>';
+    }).join('');
+  }
+
+  function renderGrid() {
+    var list = filtered();
+    var cat = CATS.filter(function (c) { return c.id === state.cat; })[0];
+    $('catTitle').textContent = cat ? cat.title : 'Toda la alacena';
+    $('resultTxt').textContent = list.length + (list.length === 1 ? ' PRODUCTO' : ' PRODUCTOS');
+    var shown = list.slice(0, state.limit);
+    $('grid').innerHTML = shown.map(function (p) {
+      var vi = state.sel[p.pag] || 0;
+      var v = p.vars[vi];
+      var key = p.pag + '|' + vi;
+      var qty = state.cart[key] || 0;
+      var html = '<article class="card">' +
+        '<div class="photo"><img src="' + p.img + '" alt="' + esc(p.name) + '" loading="lazy">' +
+        '<span class="pag">PÁG. ' + p.pag + '</span>';
+      if (p.pq) html += '<span class="pack"><span>Pack x' + p.pq + ' · ' + money(p.pp) + '</span><em>ahorras ' + money(p.pq * v[1] - p.pp) + '</em></span>';
+      html += '</div><div class="txt"><h3>' + esc(p.name) + '</h3><span class="det">' + esc(p.det) + '</span></div>';
+      if (p.vars.length > 1) {
+        html += '<div class="vars" role="group" aria-label="Medida">' + p.vars.map(function (vv, i) {
+          return '<button type="button" class="var" data-pag="' + p.pag + '" data-var="' + i + '" aria-pressed="' + (i === vi) + '">' + esc(vv[0]) + ' cm</button>';
+        }).join('') + '</div>';
+      }
+      html += '<div class="buy"><span class="price">' + money(v[1]) + '</span>';
+      if (qty === 0) {
+        html += '<button type="button" class="add" data-key="' + key + '" data-d="1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Agregar</button>';
+      } else {
+        html += '<div class="step"><button type="button" data-key="' + key + '" data-d="-1" aria-label="Quitar uno">−</button><span>' + qty + '</span><button type="button" class="plus" data-key="' + key + '" data-d="1" aria-label="Agregar uno">+</button></div>';
+      }
+      html += '</div></article>';
+      return html;
+    }).join('');
+    $('empty').hidden = list.length !== 0;
+    var rest = list.length - shown.length;
+    $('more').hidden = rest <= 0;
+    $('more').textContent = 'Ver más productos (' + rest + ')';
+  }
+
+  function renderOrder() {
+    var total = 0, units = 0;
+    var lines = Object.keys(state.cart).map(function (k) {
+      var parts = k.split('|');
+      var p = BYPAG[Number(parts[0])];
+      if (!p) return null;
+      var v = p.vars[Number(parts[1])] || p.vars[0];
+      var qty = state.cart[k];
+      var t = lineTotal(p, qty, v[1]);
+      total += t; units += qty;
+      return { k: k, p: p, v: v, qty: qty, t: t, packOn: p.pq && qty >= p.pq };
+    }).filter(Boolean).sort(function (a, b) { return a.p.pag - b.p.pag; });
+
+    $('lines').innerHTML = lines.map(function (l) {
+      return '<div class="line"><span class="thumb"><img src="' + l.p.img + '" alt=""></span>' +
+        '<div class="line-info"><b>' + esc(l.p.name) + '</b><span>Pág. ' + l.p.pag + ' · ' + esc(l.v[0] ? l.v[0] + ' cm' : l.p.det) + '</span>' +
+        (l.packOn ? '<em>Precio pack x' + l.p.pq + ' aplicado</em>' : '') + '</div>' +
+        '<div class="step"><button type="button" data-key="' + l.k + '" data-d="-1" aria-label="Quitar uno">−</button><span>' + l.qty + '</span><button type="button" class="plus" data-key="' + l.k + '" data-d="1" aria-label="Agregar uno">+</button></div>' +
+        '<span class="line-total">' + money(l.t) + '</span></div>';
+    }).join('');
+    $('noitems').hidden = lines.length > 0;
+
+    var msg = lines.length
+      ? 'Hola Home Lista, quiero hacer este pedido de la sección Alacena:\n\n' + lines.map(function (l) {
+          return '• Pág. ' + l.p.pag + ' – ' + l.p.name + (l.v[0] ? ' (' + l.v[0] + ' cm)' : '') + ' × ' + l.qty + ' = ' + money(l.t);
+        }).join('\n') + '\n\nTotal referencial: ' + money(total) + '\nQuedo a la espera de la cotización. ¡Gracias!'
+      : 'Hola Home Lista, quiero hacer este pedido de la sección Alacena:\n\n(tus productos aparecerán aquí)';
+    $('msg').textContent = msg;
+    $('total').textContent = money(total);
+    $('send').href = wa(msg);
+
+    var unitsTxt = units + (units === 1 ? ' producto' : ' productos');
+    $('unitsTop').textContent = unitsTxt;
+    $('barUnits').textContent = unitsTxt;
+    $('barTotal').textContent = money(total);
+    $('bar').hidden = lines.length === 0;
+  }
+
+  function renderAll() { renderZones(); renderChips(); renderGrid(); renderOrder(); }
+
+  function bump(key, d) {
+    var n = Math.max(0, (state.cart[key] || 0) + d);
+    if (n) state.cart[key] = n; else delete state.cart[key];
+    saveCart();
+    renderGrid(); renderOrder();
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    if (b.dataset.cat) {
+      state.cat = b.dataset.cat; state.limit = 24;
+      renderZones(); renderChips(); renderGrid();
+      if (b.dataset.scroll) $('catalogo').scrollIntoView({ behavior: 'smooth' });
+    } else if (b.dataset.var) {
+      state.sel[b.dataset.pag] = Number(b.dataset.var);
+      renderGrid();
+    } else if (b.dataset.key) {
+      bump(b.dataset.key, Number(b.dataset.d));
+    } else if (b.id === 'more') {
+      state.limit += 24; renderGrid();
+    }
+  });
+
+  $('q').addEventListener('input', function (e) { state.q = e.target.value; state.limit = 24; renderGrid(); });
+
+  /* Menú con píldora deslizante */
+  var tabs = $('tabs'), cursor = $('cursor');
+  var links = Array.prototype.slice.call(tabs.querySelectorAll('a'));
+  var selected = 0;
+  function moveTo(i) {
+    var a = links[i];
+    cursor.style.left = a.offsetLeft + 'px';
+    cursor.style.width = a.offsetWidth + 'px';
+    links.forEach(function (l, j) { l.classList.toggle('on', j === i); });
+  }
+  links.forEach(function (a, i) {
+    a.addEventListener('mouseenter', function () { moveTo(i); });
+    a.addEventListener('focus', function () { moveTo(i); });
+    a.addEventListener('click', function () {
+      selected = i;
+      links.forEach(function (l, j) { if (j === i) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); });
+      moveTo(i);
+    });
+  });
+  tabs.addEventListener('mouseleave', function () { moveTo(selected); });
+  window.addEventListener('resize', function () { moveTo(selected); });
+
+  renderAll();
+  links[0].setAttribute('aria-current', 'true');
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveTo(selected); });
+  moveTo(selected);
+})();
+</script>
+</body>
+</html>
