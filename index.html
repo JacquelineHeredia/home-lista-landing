@@ -52,10 +52,37 @@ header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-betw
 .btn-line{border:1.5px solid var(--ink);color:var(--ink)}
 .trust{display:flex;flex-wrap:wrap;gap:10px 28px;padding-top:8px;font-size:14px;color:var(--muted)}
 .trust span{display:inline-flex;align-items:center;gap:8px}
-.shelf{flex:1 1 520px;min-width:0;background:#fff;border-radius:28px;padding:28px 28px 20px;display:flex;flex-direction:column;gap:22px;box-shadow:0 30px 60px -40px rgba(23,35,27,.45)}
-.row{display:flex;align-items:flex-end;justify-content:space-around;gap:10px;border-bottom:10px solid var(--bamboo);padding:0 8px}
-.row img{max-width:30%;object-fit:contain}
-.shelf-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);gap:8px}
+/* Repisa interactiva */
+.shelf{flex:1 1 520px;min-width:0;background:#fff;border-radius:28px;padding:20px 24px 18px;display:flex;flex-direction:column;gap:18px;box-shadow:0 30px 60px -40px rgba(23,35,27,.45);touch-action:pan-y}
+.shelf-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.shelf-tabs::-webkit-scrollbar{display:none}
+.shelf-tab{position:relative;flex:0 0 auto;min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid #CBD3C7;background:#fff;color:var(--ink);font-weight:600;font-size:13px;overflow:hidden}
+.shelf-tab[aria-selected="true"]{border-color:var(--ink);background:var(--ink);color:var(--ground)}
+.shelf-tab .prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.shelf-tab[aria-selected="true"] .prog{animation:fill 5s linear forwards}
+.shelf.paused .shelf-tab .prog{animation-play-state:paused}
+@keyframes fill{to{transform:scaleX(1)}}
+.shelf-rows{display:flex;flex-direction:column;gap:30px;padding-bottom:6px}
+.row{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;height:160px;border-bottom:10px solid var(--bamboo);padding:0 6px}
+.item{position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center;background:none;border:0;padding:0;border-radius:12px;animation:drop .6s cubic-bezier(.3,1.3,.5,1) both;animation-delay:var(--d,0ms)}
+.item img{max-height:142px;max-width:92%;object-fit:contain;transition:transform .25s ease}
+.item:hover img,.item:focus-visible img{transform:translateY(-6px) scale(1.03)}
+.shelf-rows.leaving .item{animation:lift .22s ease forwards}
+@keyframes drop{0%{opacity:0;transform:translateY(-40px)}60%{opacity:1;transform:translateY(5px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes lift{to{opacity:0;transform:translateY(-14px)}}
+.ptag{position:absolute;left:50%;top:calc(100% + 16px);z-index:4;transform:translateX(-50%);transform-origin:50% -16px;opacity:0;pointer-events:none;background:var(--ink);color:var(--ground);border-radius:6px;padding:6px 9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;line-height:1.35;text-align:center;white-space:nowrap;box-shadow:0 8px 18px -8px rgba(23,35,27,.6)}
+.ptag::before{content:"";position:absolute;left:50%;top:-16px;width:1.5px;height:16px;background:var(--ink)}
+.ptag b{display:block;max-width:150px;overflow:hidden;text-overflow:ellipsis;font-family:var(--body);font-size:12px;letter-spacing:0}
+.ptag em{font-style:normal;color:var(--accent)}
+.item:hover .ptag,.item:focus-visible .ptag,.item.added .ptag{opacity:1;animation:swing .7s ease-out}
+@keyframes swing{0%{transform:translateX(-50%) rotate(-12deg)}35%{transform:translateX(-50%) rotate(7deg)}65%{transform:translateX(-50%) rotate(-3deg)}100%{transform:translateX(-50%) rotate(0)}}
+.pop{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--ink);font-weight:800;font-size:13px;padding:4px 9px;border-radius:999px;pointer-events:none;animation:popup .9s ease-out forwards}
+@keyframes popup{0%{opacity:0;transform:translate(-50%,10px)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-34px)}}
+.shelf-foot{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted)}
+.pill-dark.bump{animation:pulse .45s ease}
+@keyframes pulse{50%{transform:scale(1.08)}}
+@media (max-width:640px){.shelf{padding:16px 14px 14px}.row{height:128px}.item img{max-height:112px}.shelf-foot span:first-child{display:none}}
+@media (prefers-reduced-motion:reduce){.item,.shelf-rows.leaving .item,.ptag,.pop,.pill-dark.bump{animation:none!important}.shelf-tab .prog{display:none}}
 
 .ticker{background:var(--ink);color:var(--ground);padding:16px var(--pad);display:flex;flex-wrap:wrap;justify-content:center;gap:8px 32px;font-family:var(--mono);font-size:13px;letter-spacing:.06em}
 .ticker i{color:var(--accent);font-style:normal}
@@ -205,23 +232,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
         <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Delivery o agencia de tu preferencia</span>
       </div>
     </div>
-    <div class="shelf" role="img" aria-label="Repisa con frascos de vidrio, dispensadores y condimenteros del catálogo">
-      <div class="row" style="height:190px">
-        <img src="img/p19.webp" alt="" style="height:176px">
-        <img src="img/p33.webp" alt="" style="height:140px">
-        <img src="img/p39.webp" alt="" style="height:170px">
-      </div>
-      <div class="row" style="height:170px">
-        <img src="img/p89.webp" alt="" style="height:150px">
-        <img src="img/p23.webp" alt="" style="height:118px;max-width:34%">
-        <img src="img/p56.webp" alt="" style="height:160px">
-      </div>
-      <div class="row" style="height:170px">
-        <img src="img/p102.webp" alt="" style="height:156px">
-        <img src="img/p20.webp" alt="" style="height:160px">
-        <img src="img/p100.webp" alt="" style="height:128px;max-width:34%">
-      </div>
-      <div class="shelf-labels"><span>VIDRIO BOROSILICATO</span><span>BAMBÚ</span><span>ACRÍLICO APILABLE</span></div>
+    <div class="shelf" id="shelf" role="region" aria-label="Repisa interactiva de productos">
+      <div class="shelf-tabs" id="shelfTabs" role="tablist" aria-label="Zonas de la alacena"></div>
+      <div class="shelf-rows" id="shelfRows" role="tabpanel"></div>
+      <div class="shelf-foot"><span>TOCA UN PRODUCTO PARA AGREGARLO</span><span id="shelfCount"></span></div>
     </div>
   </section>
 
@@ -346,6 +360,16 @@ var CATS = [
   { id: 'mesa',     name: 'Mesa y servir',        title: 'Mesa y servir',        img: 'img/p47.webp' },
   { id: 'especias', name: 'Especias y aceites',   title: 'Especias y aceites',   img: 'img/p89.webp' },
   { id: 'orden',    name: 'Cajones y orden',      title: 'Cajones y orden',      img: 'img/p52.webp' }
+];
+
+/* Repisa de la portada: 9 productos por zona (números de página), 3 por estante */
+var REPISA = [
+  { zona: 'despensa', nombre: 'Despensa', paginas: [19, 42, 20, 22, 60, 13, 102, 76, 104] },
+  { zona: 'refri',    nombre: 'Refri',    paginas: [56, 57, 100, 66, 99, 59, 109, 64, 67] },
+  { zona: 'bebidas',  nombre: 'Bebidas',  paginas: [39, 34, 41, 9, 43, 11, 35, 40, 8] },
+  { zona: 'mesa',     nombre: 'Mesa',     paginas: [31, 33, 32, 47, 55, 49, 54, 111, 51] },
+  { zona: 'especias', nombre: 'Especias', paginas: [89, 23, 30, 92, 36, 28, 93, 29, 94] },
+  { zona: 'orden',    nombre: 'Orden',    paginas: [52, 105, 7, 72, 53, 106, 108, 6, 95] }
 ];
 
 /* [página, nombre, detalle, [[medida, precio], ...], cantidad pack, precio pack, zona]
@@ -643,6 +667,105 @@ var PRODUCTOS = [
   });
   tabs.addEventListener('mouseleave', function () { moveTo(selected); });
   window.addEventListener('resize', function () { moveTo(selected); });
+
+  /* Repisa interactiva */
+  var shelf = $('shelf'), shelfTabs = $('shelfTabs'), shelfRows = $('shelfRows');
+  var shelfIdx = 0, resumeTimer = null;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function priceLabel(p) {
+    if (p.vars.length > 1) {
+      var min = Math.min.apply(null, p.vars.map(function (v) { return v[1]; }));
+      return 'desde ' + money(min);
+    }
+    return money(p.vars[0][1]);
+  }
+
+  function renderShelfTabs() {
+    shelfTabs.innerHTML = REPISA.map(function (z, i) {
+      return '<button type="button" class="shelf-tab" role="tab" id="stab-' + i + '" aria-controls="shelfRows" aria-selected="' + (i === shelfIdx) + '" data-shelf-tab="' + i + '">' + esc(z.nombre) + '<i class="prog" aria-hidden="true"></i></button>';
+    }).join('');
+    shelfRows.setAttribute('aria-labelledby', 'stab-' + shelfIdx);
+  }
+
+  function renderShelfRows() {
+    var z = REPISA[shelfIdx];
+    var prods = z.paginas.map(function (n) { return BYPAG[n]; }).filter(Boolean);
+    var html = '';
+    for (var r = 0; r < prods.length; r += 3) {
+      html += '<div class="row">' + prods.slice(r, r + 3).map(function (p, j) {
+        var price = priceLabel(p);
+        return '<button type="button" class="item" data-shelf-pag="' + p.pag + '" style="--d:' + ((r + j) * 70) + 'ms" aria-label="Agregar ' + esc(p.name) + ', página ' + p.pag + ', ' + price + '">' +
+          '<img src="' + p.img + '" alt="">' +
+          '<span class="ptag" aria-hidden="true"><b>' + esc(p.name) + '</b>PÁG. ' + p.pag + ' · <em>' + price + '</em></span></button>';
+      }).join('') + '</div>';
+    }
+    shelfRows.innerHTML = html;
+    $('shelfCount').textContent = (COUNTS[z.zona] || 0) + ' EN ' + z.nombre.toUpperCase();
+  }
+
+  function goShelf(i) {
+    shelfIdx = (i + REPISA.length) % REPISA.length;
+    renderShelfTabs();
+    var tab = $('stab-' + shelfIdx);
+    if (tab && tab.scrollIntoView) tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    if (reduceMotion) { renderShelfRows(); return; }
+    shelfRows.classList.add('leaving');
+    setTimeout(function () { shelfRows.classList.remove('leaving'); renderShelfRows(); }, 220);
+  }
+
+  function addFromShelf(btn) {
+    var pag = Number(btn.dataset.shelfPag);
+    bump(pag + '|0', 1);
+    btn.classList.remove('added'); void btn.offsetWidth; btn.classList.add('added');
+    setTimeout(function () { btn.classList.remove('added'); }, 1400);
+    if (!reduceMotion) {
+      var pop = document.createElement('span');
+      pop.className = 'pop'; pop.textContent = '+1'; pop.setAttribute('aria-hidden', 'true');
+      btn.appendChild(pop);
+      pop.addEventListener('animationend', function () { pop.remove(); });
+      var pill = document.querySelector('.pill-dark');
+      pill.classList.remove('bump'); void pill.offsetWidth; pill.classList.add('bump');
+    }
+  }
+
+  shelf.addEventListener('click', function (e) {
+    var tab = e.target.closest('[data-shelf-tab]');
+    if (tab) { goShelf(Number(tab.dataset.shelfTab)); return; }
+    var item = e.target.closest('[data-shelf-pag]');
+    if (item) addFromShelf(item);
+  });
+  shelfTabs.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goShelf(shelfIdx + (e.key === 'ArrowRight' ? 1 : -1));
+      $('stab-' + shelfIdx).focus();
+    }
+  });
+  /* Avanza solo cuando la barra de progreso de la pestaña termina */
+  shelfTabs.addEventListener('animationend', function (e) {
+    if (e.animationName === 'fill') goShelf(shelfIdx + 1);
+  });
+  /* Pausa mientras el cliente mira o interactúa */
+  function pause() { clearTimeout(resumeTimer); shelf.classList.add('paused'); }
+  function resume(delay) { clearTimeout(resumeTimer); resumeTimer = setTimeout(function () { shelf.classList.remove('paused'); }, delay || 0); }
+  shelf.addEventListener('mouseenter', pause);
+  shelf.addEventListener('mouseleave', function () { resume(0); });
+  shelf.addEventListener('focusin', pause);
+  shelf.addEventListener('focusout', function (e) { if (!shelf.contains(e.relatedTarget)) resume(0); });
+  /* Deslizar con el dedo en el celular */
+  var touchX = null;
+  shelfRows.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; pause(); }, { passive: true });
+  shelfRows.addEventListener('touchend', function (e) {
+    if (touchX !== null) {
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) goShelf(shelfIdx + (dx < 0 ? 1 : -1));
+    }
+    touchX = null; resume(6000);
+  });
+
+  renderShelfTabs();
+  renderShelfRows();
 
   renderAll();
   links[0].setAttribute('aria-current', 'true');
