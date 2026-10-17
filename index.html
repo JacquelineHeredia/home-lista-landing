@@ -60,7 +60,7 @@ header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-betw
 .shelf-tab[aria-selected="true"]{border-color:var(--ink);background:var(--ink);color:var(--ground)}
 .shelf-tab .prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left}
 .shelf-tab[aria-selected="true"] .prog{animation:fill 5s linear forwards}
-.shelf.paused .shelf-tab .prog{animation-play-state:paused}
+.shelf.paused .shelf-tab .prog,.shelf.offscreen .shelf-tab .prog{animation-play-state:paused}
 @keyframes fill{to{transform:scaleX(1)}}
 .shelf-rows{display:flex;flex-direction:column;gap:30px;padding-bottom:6px}
 .row{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;height:160px;border-bottom:10px solid var(--bamboo);padding:0 6px}
@@ -707,8 +707,11 @@ var PRODUCTOS = [
   function goShelf(i) {
     shelfIdx = (i + REPISA.length) % REPISA.length;
     renderShelfTabs();
+    /* Solo desplaza la fila de pestañas (horizontal), nunca la página */
     var tab = $('stab-' + shelfIdx);
-    if (tab && tab.scrollIntoView) tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    if (tab && shelfTabs.scrollWidth > shelfTabs.clientWidth) {
+      shelfTabs.scrollTo({ left: Math.max(0, tab.offsetLeft - 8), behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
     if (reduceMotion) { renderShelfRows(); return; }
     shelfRows.classList.add('leaving');
     setTimeout(function () { shelfRows.classList.remove('leaving'); renderShelfRows(); }, 220);
@@ -763,6 +766,13 @@ var PRODUCTOS = [
     }
     touchX = null; resume(6000);
   });
+
+  /* La repisa solo avanza sola mientras está a la vista (parte inicial) */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { shelf.classList.toggle('offscreen', en.intersectionRatio < 0.35); });
+    }, { threshold: [0, 0.35, 1] }).observe(shelf);
+  }
 
   renderShelfTabs();
   renderShelfRows();
